@@ -1,14 +1,15 @@
 <?php
 
-$connexion = mysqli_connect("localhost","root","","wishcord");
-
-$email = $_POST["email"];
-$pswd = $_POST["pswd"];
-
-$sql = "SELECT COUNT(*) AS nb FROM users WHERE email = '$email' AND pswd = '$pswd'";
-
-
-
-
-
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
