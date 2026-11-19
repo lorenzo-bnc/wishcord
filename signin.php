@@ -2,7 +2,18 @@
 
 include('./libs/lib_bdd.php');
 
-$rqt = getDB()->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
+$pdo = getDB();
+
+$rqt = "INSERT INTO users (username, email, password) VALUES (:username, :email, :pwd)";
+
+$stmt = $pdo->prepare($rqt);
+        $stmt->execute([
+            ":username" => $username,
+            ":email" => $email,
+            ":pwd" => $password
+        ]);
+
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
 
@@ -13,14 +24,19 @@ $rqt = getDB()->prepare("INSERT INTO users (username, email, password) VALUES (:
 <html lang="en">
 <head>
     <?php require_once('./includes/header.php'); ?>
-    <title>Accueil</title>
+    <title>Inscription</title>
 </head>
 <body>
     <header>
         <?php require_once('./includes/navbar.php'); ?>
     </header>
     <main>
-
+        <form method="POST">
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Mot de passe" required>
+            <input type="text" name="username" placeholder="Nom d'utilisateur" required>
+            <button type="submit">S'inscrire</button>
+        </form>
     </main>
     <footer>
 

@@ -38,7 +38,7 @@ if(isset($_POST["email"]) && isset($_POST["password"])){
 <html lang="en">
 <head>
     <?php require_once('./includes/header.php'); ?>
-    <title>Page de connexion</title>
+    <title>Connexion</title>
 </head>
 <body>
     <header>
@@ -46,9 +46,9 @@ if(isset($_POST["email"]) && isset($_POST["password"])){
     </header>
     <main>
         <form method="POST">
-            <input type="email" name="email" placeholder="Entrez votre email">
-            <input type="password" name="password" placeholder="Entrez votre mot de passe">
-            <input type="submit">
+            <input type="email" name="email" placeholder="Entrez votre email" required>
+            <input type="password" name="password" placeholder="Entrez votre mot de passe" required>
+            <button type="submit">Se connecter</button>
         </form>
     </main>
     <footer>
