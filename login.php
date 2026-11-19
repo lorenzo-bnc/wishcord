@@ -2,30 +2,32 @@
 include("./libs/lib_bdd.php");
 
 if(isset($_POST["email"]) && isset($_POST["password"])){
+    try{
+        $pdo = getDB();
 
-    $pdo = getDB();
+        $email = $_POST["email"];
+        $password = $_POST["password"];
 
-    $email = $_POST["email"];
+        $rqt = "SELECT COUNT(*) AS nb, id_user FROM users WHERE email = :email AND password = SHA2(:pwd, 256)";
 
-    $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+        $stmt = $pdo->prepare($rqt);
+        $stmt->execute([
+            ":email" => $email,
+            ":pwd" => $password
+        ]);
 
-    $rqt = "SELECT COUNT(*) AS nb, id_user FROM users WHERE email = :email AND password = :pwd";
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $stmt = $pdo->prepare($rqt);
-    $stmt->execute([
-        ":email" => $email,
-        ":pwd" => $password
-    ]);
-
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if($result["nb"] == 1){
-        echo "connexion réussie";
+        if($result["nb"] == 1){
+            echo "connexion réussie";
+        }
+        else{
+            echo "connexion échouée";
+        }
     }
-    else{
-        echo "connexion échouée";
+    catch(PDOException $error){
+        $error->getMessage();
     }
-
 }
 
 
