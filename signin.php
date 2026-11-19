@@ -1,21 +1,26 @@
 <?php
 
 include('./libs/lib_bdd.php');
+if(isset($_POST["email"]) && isset($_POST["password"])){
 
-$pdo = getDB();
+    $email = $_POST["email"];
 
-$rqt = "INSERT INTO users (username, email, password) VALUES (:username, :email, :pwd)";
+    $password = $_POST["password"];
 
-$stmt = $pdo->prepare($rqt);
-        $stmt->execute([
-            ":username" => $username,
-            ":email" => $email,
-            ":pwd" => $password
-        ]);
+    $pdo = getDB();
 
-$result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $rqt = "INSERT INTO users (username, email, password) VALUES (:username, :email, SHA2(:pwd, 256))";
 
+    $stmt = $pdo->prepare($rqt);
+            $stmt->execute([
+                ":username" => $username,
+                ":email" => $email,
+                ":pwd" => $password
+            ]);
 
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+}
 
 
 ?>
