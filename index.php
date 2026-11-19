@@ -9,6 +9,14 @@
     <title>Accueil</title>
 </head>
 <body>
-    
+    <header>
+        <?php require_once('./includes/navbar.php'); ?>
+    </header>
+    <main>
+
+    </main>
+    <footer>
+
+    </footer>
 </body>
 </html>
