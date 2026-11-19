@@ -1,29 +1,34 @@
 <?php
 include("./libs/lib_bdd.php");
 
+if(isset($_POST["email"]) && isset($_POST["password"])){
 
-$pdo = getDB();
+    $pdo = getDB();
 
-$email = $_POST["email"];
+    $email = $_POST["email"];
 
-$password = password_hash($_POST["password"]);
+    $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
-$rqt = "SELECT COUNT(*) AS nb, id_user FROM users WHERE email = :email AND password = :pwd";
+    $rqt = "SELECT COUNT(*) AS nb, id_user FROM users WHERE email = :email AND password = :pwd";
 
-$stmt = $pdo->prepare($rqt);
-$stmt->execute([
-    ":email" => $email,
-    ":pwd" => $password
-]);
+    $stmt = $pdo->prepare($rqt);
+    $stmt->execute([
+        ":email" => $email,
+        ":pwd" => $password
+    ]);
 
-$result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if($result["nb"] == 1){
-    echo "connexion réussie";
+    if($result["nb"] == 1){
+        echo "connexion réussie";
+    }
+    else{
+        echo "connexion échouée";
+    }
+
 }
-else{
-    echo "connexion échouée";
-}
+
+
 
 ?>
 
