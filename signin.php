@@ -1,11 +1,11 @@
 <?php
 
 include('./libs/lib_bdd.php');
-if(isset($_POST["email"]) && isset($_POST["password"])){
+if(isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["username"])){
 
     $email = $_POST["email"];
-
     $password = $_POST["password"];
+    $username = $_POST["username"];
 
     $pdo = getDB();
 
@@ -19,7 +19,6 @@ if(isset($_POST["email"]) && isset($_POST["password"])){
             ]);
 
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
 }
 
 
