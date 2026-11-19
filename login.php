@@ -8,7 +8,10 @@ if(isset($_POST["email"]) && isset($_POST["password"])){
         $email = $_POST["email"];
         $password = $_POST["password"];
 
-        $rqt = "SELECT COUNT(*) AS nb, id_user FROM users WHERE email = :email AND password = SHA2(:pwd, 256)";
+        $rqt = "SELECT COUNT(*) AS nb, id_user 
+                FROM users 
+                WHERE email = :email 
+                AND password = SHA2(:pwd, 256)";
 
         $stmt = $pdo->prepare($rqt);
         $stmt->execute([
@@ -34,7 +37,7 @@ if(isset($_POST["email"]) && isset($_POST["password"])){
 
             $jwt = makeJWT($header, $payload);
 
-            setcookie($jwt);
+            setcookie("auth", $jwt);
         }
         else{
             echo "connexion échouée";
@@ -44,9 +47,6 @@ if(isset($_POST["email"]) && isset($_POST["password"])){
         $error->getMessage();
     }
 }
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -56,8 +56,7 @@ if(isset($_POST["email"]) && isset($_POST["password"])){
     <title>Connexion</title>
 </head>
 <body>
-    <header>
-        <?php require_once('./includes/navbar.php'); ?>
+    <header style="display: none">
     </header>
     <main>
         <form method="POST">

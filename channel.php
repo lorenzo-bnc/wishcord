@@ -1,5 +1,6 @@
 <?php
-
+include("./libs/lib_auth.php");
+verifCnx();
 ?>
 
 <!DOCTYPE html>
