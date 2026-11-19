@@ -1,4 +1,29 @@
 <?php
+include("./libs/lib_bdd.php");
+
+
+$pdo = getDB();
+
+$email = $_POST["email"];
+
+$password = password_hash($_POST["password"]);
+
+$rqt = "SELECT COUNT(*) AS nb, id_user FROM users WHERE email = :email AND password = :pwd";
+
+$stmt = $pdo->prepare($rqt);
+$stmt->execute([
+    ":email" => $email,
+    ":pwd" => $password
+]);
+
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if($result["nb"] == 1){
+    echo "connexion réussie";
+}
+else{
+    echo "connexion échouée";
+}
 
 ?>
 
@@ -6,14 +31,18 @@
 <html lang="en">
 <head>
     <?php require_once('./includes/header.php'); ?>
-    <title>Accueil</title>
+    <title>Page de connexion</title>
 </head>
 <body>
     <header>
         <?php require_once('./includes/navbar.php'); ?>
     </header>
     <main>
-
+        <form method="POST">
+            <input type="email" name="email" placeholder="Entrez votre email">
+            <input type="password" name="password" placeholder="Entrez votre mot de passe">
+            <input type="submit">
+        </form>
     </main>
     <footer>
 
