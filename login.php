@@ -2,6 +2,10 @@
 include("./libs/lib_bdd.php");
 include("./libs/lib_token.php");
 
+if(checkJWT($_COOKIE['auth'])){
+    header('Location: index.php');
+}
+
 if(isset($_POST["email"]) && isset($_POST["password"])){
     try{
         $pdo = getDB();
