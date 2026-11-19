@@ -1,8 +1,27 @@
 <?php
+
+function base64url_encode($data){
+    $b64 = base64_encode($data);
+
+    if($b64 === false){
+        return false;
+    }
+
+    $url = strtr($b64, '+/', '-_');
+
+    return rtrim($url,'=');
+}
+
+function base64url_decode($data, $strict = false){
+    $b64 = strtr($data, '-_', '+/');
+
+    return base64_decode($b64, $strict);
+}
+
 function makeJWT($header,$payload,$cle_secrete){
-    $header64 = base64_encode(json_encode($header));
-    $payload64 = base64_encode(json_encode($payload));
-    $signature = base64_encode(hash_hmac("sha256",$header64.".".$payload64,$cle_secrete,true));
+    $header64 = base64url_encode(json_encode($header));
+    $payload64 = base64url_encode(json_encode($payload));
+    $signature = base64url_encode(hash_hmac("sha256",$header64.".".$payload64,$cle_secrete,true));
 
     return $header64.".".$payload64.".".$signature;
 }
@@ -12,7 +31,7 @@ function getPayloadJWT($jwt){
 
     $payload = $tokenParts[1];
 
-    return  json_decode(base64_decode($payload));
+    return  json_decode(base64url_decode($payload));
 }
 
 function checkJWT($jwt){
@@ -27,7 +46,7 @@ function checkJWT($jwt){
 
         $hashWithSecret = hash_hmac("sha256",$data,"caca",true);
 
-        $hashWithSecret_encode64 = base64_encode($hashWithSecret);
+        $hashWithSecret_encode64 = base64url_encode($hashWithSecret);
 
         return hash_equals($tokenParts[2],$hashWithSecret_encode64);
     }
