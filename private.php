@@ -9,12 +9,15 @@
     <title>Accueil</title>
 </head>
 <body>
-    <header>
-        <?php require_once('./includes/navbar.php'); ?>
-    </header>
-    <main>
+    <div id="content">
+        <header>
+            <?php require_once('./includes/navbar.php'); ?>
+        </header>
+        <main>
 
-    </main>
+        </main>
+    </div>
+    
     <footer>
 
     </footer>

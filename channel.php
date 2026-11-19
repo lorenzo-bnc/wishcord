@@ -9,13 +9,15 @@
     <title>Accueil</title>
 </head>
 <body>
-    <header>
-        <?php require_once('./includes/navbar.php'); ?>
-        <img src="./IMG/icon.png" alt="Logo">
-    </header>
-    <main>
+    <div id="content">
+        <header>
+            <?php require_once('./includes/navbar.php'); ?>
+        </header>
+        <main>
 
-    </main>
+        </main>
+    </div>
+    
     <footer>
 
     </footer>
