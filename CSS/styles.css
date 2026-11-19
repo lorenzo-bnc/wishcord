@@ -1,10 +1,12 @@
 :root{
     --bg-primary: rgb(30, 30, 30);
+    --color-primary: rgb(229, 229, 229);
 }
 
 *{
     margin: 0;
     padding: 0;
+    color: var(--color-primary)
 }
 
 body{
