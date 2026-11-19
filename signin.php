@@ -1,5 +1,12 @@
 <?php
 
+include('./libs/lib_bdd.php');
+
+$rqt = getDB()->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
+
+
+
+
 ?>
 
 <!DOCTYPE html>
