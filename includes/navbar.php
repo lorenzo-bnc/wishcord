@@ -3,6 +3,7 @@
         <div id="channel">
 
         </div>
+        <hr>
         <div id="private">
 
         </div>

@@ -1,6 +1,7 @@
 :root{
     --bg-primary: rgb(30, 30, 30);
     --color-primary: rgb(229, 229, 229);
+    --bg-navbar: rgb(39, 39, 39);
 }
 
 *{
@@ -11,4 +12,32 @@
 
 body{
     background-color: var(--bg-primary);
+}
+
+div#content{
+    display: flex;
+}
+
+header{
+    width: 40%;
+    height: 100vh;
+
+    background-color: var(--bg-navbar);
+}
+
+main{
+    width: 60%;
+    height: 100vh;
+}
+
+/* NAVBAR */
+div#side{
+    display: flex;
+    height: 95vh;
+}
+div#channel{
+    width: 20%;
+}
+div#private{
+    width: 80%;
 }
