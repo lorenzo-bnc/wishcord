@@ -2,8 +2,10 @@
 include("./libs/lib_bdd.php");
 include("./libs/lib_token.php");
 
-if(checkJWT($_COOKIE['auth'])){
-    header('Location: index.php');
+if(isset($_COOKIE['auth'])){
+   if(checkJWT($_COOKIE['auth'])){
+        header('Location: index.php');
+    }
 }
 
 if(isset($_POST["email"]) && isset($_POST["password"])){
@@ -41,8 +43,9 @@ if(isset($_POST["email"]) && isset($_POST["password"])){
             ];
 
             $jwt = makeJWT($header, $payload);
-
             setcookie("auth", $jwt);
+
+            header('Location: index.php');
         }
         else{
             echo "connexion échouée";
