@@ -20,6 +20,21 @@ if(isset($_POST["email"]) && isset($_POST["password"])){
 
         if($result["nb"] == 1){
             echo "connexion réussie";
+
+            $idUser = $result["id_user"];
+
+            $header = [
+                "alg" => "sha256",
+                "typ" => "JWT"
+            ];
+
+            $payload = [
+                "id_user" => "$idUser"
+            ];
+
+            $jwt = makeJWT($header, $payload);
+
+            setcookie($jwt);
         }
         else{
             echo "connexion échouée";
