@@ -34,7 +34,7 @@ function getPayloadJWT($jwt){
 
     $payload = $tokenParts[1];
 
-    return  json_decode(base64url_decode($payload));
+    return  json_decode(base64url_decode($payload), true);
 }
 
 function checkJWT($jwt){
@@ -51,7 +51,23 @@ function checkJWT($jwt){
 
         $hashWithSecret_encode64 = base64url_encode($hashWithSecret);
 
-        return hash_equals($tokenParts[2],$hashWithSecret_encode64);
+        if(hash_equals($tokenParts[2],$hashWithSecret_encode64)){
+            $payload = getPayloadJWT($jwt);
+            $expiration = $payload['expiration'];
+
+            $expiration = strtotime($expiration);
+
+            $date_now = strtotime(date("Y-m-d H:i:s"));
+
+            if($date_now > $expiration){
+                return false;
+            }
+            return true;
+        }
+        else{
+            return false;
+        }
+    
     }
 
 }

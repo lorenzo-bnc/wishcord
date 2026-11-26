@@ -1,6 +1,7 @@
 <?php
 include("./libs/lib_bdd.php");
 include("./libs/lib_token.php");
+include("./libs/lib_log.php");
 
 if(isset($_COOKIE['auth'])){
    if(checkJWT($_COOKIE['auth'])){
@@ -15,7 +16,7 @@ if(isset($_POST["email"]) && isset($_POST["password"])){
         $email = $_POST["email"];
         $password = $_POST["password"];
 
-        $rqt = "SELECT COUNT(*) AS nb, id_user 
+        $rqt = "SELECT COUNT(*) AS nb, id_user, username
                 FROM users 
                 WHERE email = :email 
                 AND password = SHA2(:pwd, 256)";
@@ -32,6 +33,8 @@ if(isset($_POST["email"]) && isset($_POST["password"])){
             echo "connexion réussie";
 
             $idUser = $result["id_user"];
+            $username = $result["username"];
+            $expiration = date("Y-m-d H:i:s", strtotime("+15 minutes"));
 
             $header = [
                 "alg" => "sha256",
@@ -39,11 +42,14 @@ if(isset($_POST["email"]) && isset($_POST["password"])){
             ];
 
             $payload = [
-                "id_user" => "$idUser"
+                "id_user" => "$idUser",
+                "expiration" => "$expiration"
             ];
 
             $jwt = makeJWT($header, $payload);
             setcookie("auth", $jwt);
+
+            addLog("$username s'est connecté", "INFO");
 
             header('Location: index.php');
         }
