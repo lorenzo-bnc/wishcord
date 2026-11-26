@@ -1,5 +1,7 @@
 <?php
 include('./libs/lib_bdd.php');
+include('./libs/lib_log.php');
+
 if(isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["username"])){
     try{
         $email = $_POST["email"];
@@ -21,7 +23,7 @@ if(isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["username
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
     }
     catch(PDOException $error){
-        $error->getMessage();
+        addLog($error->getMessage(), "WARN");
     }
 }
 ?>

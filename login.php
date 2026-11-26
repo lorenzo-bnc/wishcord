@@ -58,7 +58,7 @@ if(isset($_POST["email"]) && isset($_POST["password"])){
         }
     }
     catch(PDOException $error){
-        $error->getMessage();
+        addLog($error->getMessage(), "WARN");
     }
 }
 ?>

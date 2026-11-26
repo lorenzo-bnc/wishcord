@@ -1,53 +1,50 @@
 <?php
-
-include("./libs/lib_bdd.php");
 include("./libs/lib_auth.php");
-include("./libs/lib_token.php");
+verifCnx();
 
+if(
+    isset($_POST["email"]) ||
+    isset($_POST["username"]) ||
+    isset($_POST["password"])
+){
+    try{
+        $champs_a_update = "";
+        $flag = [];
 
+        if(isset($_POST['email']) && $_POST['email'] != ""){
+            $champs_a_update .= "email = :email,";
+            $flag[":email"] = $_POST['email'];
+        };
 
-$pdo = getDB();
+        if(isset($_POST['password']) && $_POST['password'] != ""){
+            $champs_a_update .= "password = SHA2(:pwd, 256),";
+            $flag[":pwd" ] = $_POST['password'];
+        };
 
-$username = $_POST["username"] ;
+        if(isset($_POST['username']) && $_POST['username'] != ""){
+            $champs_a_update .= "username = :username,";
+            $flag[":username"] = $_POST['username'];
+        };
 
-$email = $_POST["email"];
+        $champs_a_update = rtrim($champs_a_update, ',');
 
-$password["password"];
+        $flag[':id_user'] = $id_user;
+    
+        $rqt = "UPDATE users
+                SET $champs_a_update
+                WHERE id_user = :id_user";
 
-$data = getPayloadJWT($_COOKIE["auth"]);
+        $stmt = $pdo->prepare($rqt);
+        $stmt->execute($flag);
 
-$idUser = $data["id_user"];
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$rqt_username = "UPDATE users SET username = :username  WHERE id_user = :id_user";
-
-$rqt_email = "UPDATE users SET email = :email  WHERE id_user = :id_user";
-
-$rqt_password = "UPDATE users SET password = :pwd  WHERE id_user = :id_user";
-
-
-$stmt = $pdo->prepare($rqt_username);
-$stmt->execute([
-        ":username" => $username,
-        ":id_user" => $idUser
-    ]);
-
-$result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-$stmt = $pdo->prepare($rqt_email);
-$stmt->execute([
-        ":email" => $email,
-        ":id_user" => $idUser
-    ]);
-
-$result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-$stmt = $pdo->prepare($rqt_password);
-$stmt->execute([
-        ":pwd" => $password,
-        ":id_user" => $idUser
-    ]);
-
-$result = $stmt->fetch(PDO::FETCH_ASSOC);
+        header("Location: profile.php");
+    }
+    catch(PDOException $error){
+        addLog($error->getMessage(), "WARN");
+    }
+}
 
 ?>
 
@@ -58,16 +55,20 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
     <title> Profile </title>
 </head>
 <body>
-    <header>
-        <?php require_once('./includes/navbar.php'); ?>
-    </header>
-    <main>
-        <form method="POST">
-            <input type="email" name="email" placeholder="Entrez votre email">
-            <input type="email" name="email" placeholder="Entrez votre email">
-            <input type="password" name="password" placeholder="Entrez votre mot de passe">
-        </form>
-    </main>
+    <div id="content">
+        <header>
+            <?php require_once('./includes/navbar.php'); ?>
+        </header>
+        <main>
+            <form method="POST">
+                <h1>Modifier vos informations</h1>
+                <input type="email" name="email" placeholder="<?= $dataUser["email"] ?>">
+                <input type="text" name="username" placeholder="<?= $dataUser["username"] ?>">
+                <input type="password" name="password" placeholder="*********">
+                <button type="submit">Enregistrer</button>
+            </form>
+        </main>
+    </div>
     <footer>
 
     </footer>
