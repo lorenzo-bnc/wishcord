@@ -19,14 +19,14 @@ div#content{
 }
 
 header{
-    width: 40%;
+    width: 30%;
     height: 100vh;
 
     background-color: var(--bg-navbar);
 }
 
 main{
-    width: 60%;
+    width: 70%;
     height: 100vh;
 }
 
@@ -40,4 +40,11 @@ div#channel{
 }
 div#private{
     width: 80%;
+}
+img{
+    border-radius: 6px;
+    width: 80%;
+}
+a.channel{
+    padding: 6.7px;
 }

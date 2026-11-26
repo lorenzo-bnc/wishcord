@@ -1,7 +1,25 @@
 <div id="navbar">
     <div id="side">
         <div id="channel">
-
+            <a href="private.php" class="channel">
+                <img src="./IMG/icon.png" alt="icon">
+            </a>
+            <a href="private.php" class="channel">
+                <img src="./IMG/icon.png" alt="icon">
+            </a>
+            <a href="private.php" class="channel">
+                <img src="./IMG/icon.png" alt="icon">
+            </a>
+            <a href="private.php" class="channel">
+                <img src="./IMG/icon.png" alt="icon">
+            </a>
+            <a href="private.php" class="channel">
+                <img src="./IMG/icon.png" alt="icon">
+            </a>
+            <a href="private.php" class="channel">
+                <img src="./IMG/icon.png" alt="icon">
+            </a>
+            
         </div>
         <hr>
         <div id="private">
@@ -15,3 +33,6 @@
         </a>
     </div>
 </div>
+
+
+<script src="./JS/main.js"></script>

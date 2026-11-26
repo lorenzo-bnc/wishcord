@@ -7,7 +7,7 @@ verifCnx();
 <html lang="en">
 <head>
     <?php require_once('./includes/header.php'); ?>
-    <title>Accueil</title>
+    <title>Message privé</title>
 </head>
 <body>
     <div id="content">
